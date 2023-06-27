@@ -1,0 +1,8 @@
+const path = require('path'); //chamar o modulo nativo do node para determinar o caminho
+
+module.exports = {
+  'config': path.resolve('config', 'sequelizeCli.js'), //localização do arquivo de configuração, dessa forma estamos determinando outro nome do arquivo, mudando o padrão.
+  'models-path': path.resolve('src', 'modeles'), //detarminar onde estão os models
+  'seeders-path': path.resolve('src', 'database', 'seeders'), //localização dos seeders
+  'migrations-path': path.resolve('src', 'database', 'migrations') //localização das migrations
+}
