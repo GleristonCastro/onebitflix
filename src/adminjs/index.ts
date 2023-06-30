@@ -1,8 +1,10 @@
 import AdminJS from 'adminjs'; //chamamos o AdminJs que iremos utilizar para criação do admin
-import AdminJSExpress from '@adminjs/express'; //chamamos o completo do express para adminJS
+import AdminJsExpress from '@adminjs/express'; //chamamos o completo do express para adminJS
 import AdminJSSEquelize from '@adminjs/sequelize'; //Chamamos o completo do sequelize para adminJS
 import { sequelize } from '../database'; //chamamos as configurações que fizemos do banco de dados
-import { adminJsResources } from './resources';
+import { adminJsResources } from './resources'; //Importando os recursos para o adminJS
+import { User } from '../models'
+import bcrypt from 'bcrypt'
 
 AdminJS.registerAdapter(AdminJSSEquelize);
 
@@ -34,6 +36,24 @@ export const adminJs = new AdminJS({ //Instânciamos o adminJS e o exportamos
 });
 
 //Iremos intânciar novamnete agora o adminJSRouter, pois iremos precisar para incluir as rotas do adminJS lá no nosso app do express, como se fosse um middleware de rotas 
-export const adminJsRouter = AdminJSExpress.buildRouter(adminJs)
+export const adminJsRouter = AdminJsExpress.buildAuthenticatedRouter(adminJs, {
+  authenticate: async (email, password) => {
+    const user = await User.findOne({ where: { email } })
+
+    if (user && user.role === 'admin') {
+      const matched = await bcrypt.compare(password, user.password)
+
+      if (matched) {
+        return user
+      }
+    }
+
+    return false
+  },
+  cookiePassword: 'senha-do-cookie'
+}, null, {
+	resave: false,
+	saveUninitialized: false
+})
 
 //Passamos para o buildRouter a intância do adminJs pois ele será responsável por construir as rotas.
