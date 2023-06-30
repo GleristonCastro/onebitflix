@@ -3,8 +3,9 @@ import AdminJsExpress from '@adminjs/express'; //chamamos o completo do express 
 import AdminJSSEquelize from '@adminjs/sequelize'; //Chamamos o completo do sequelize para adminJS
 import { sequelize } from '../database'; //chamamos as configurações que fizemos do banco de dados
 import { adminJsResources } from './resources'; //Importando os recursos para o adminJS
-import { User } from '../models'
-import bcrypt from 'bcrypt'
+import { User } from '../models';
+import bcrypt from 'bcrypt';
+import {locale} from './locale'
 
 AdminJS.registerAdapter(AdminJSSEquelize);
 
@@ -12,6 +13,7 @@ export const adminJs = new AdminJS({ //Instânciamos o adminJS e o exportamos
   databases: [sequelize], //Ma propriedade do databases importamos a instância do Sequelize, notamos que é um array que poderíamos trabalhar com mais de um banco de dados.
   rootPath: '/admin', //É o caminho para nosso Admin
 	resources: adminJsResources,
+  locale: locale,
   branding: {
     companyName: 'OneBitFlix',
     logo: '/logoOnebitflix.svg',
