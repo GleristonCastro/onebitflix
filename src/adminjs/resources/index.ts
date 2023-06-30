@@ -1,7 +1,8 @@
 import { ResourceWithOptions } from "adminjs";
-import { Category, Course } from "../../models";
+import { Category, Course, Episode } from "../../models";
 import { categoryResourceOption } from "./category";
 import { courseResourceOptions } from "./course";
+import { episodeResourceOptions } from "./episode";
 
 //Vamos criar a constante adminJsResources e passar o tipo do array ResourceOptions[], pois será uma opção de todos os arrays
 
@@ -13,5 +14,9 @@ export const adminJsResources: ResourceWithOptions[] = [
   {
     resource: Course,
     options: courseResourceOptions
+  },
+  {
+    resource: Episode,
+    options: episodeResourceOptions
   }
 ]
