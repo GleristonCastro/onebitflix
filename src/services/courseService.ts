@@ -1,4 +1,4 @@
-import { Course } from "../models"
+import { Course } from "../models";
 
 export const courseService = {
   findByIdWithEpisodes: async (id: string) => {
@@ -15,10 +15,23 @@ export const courseService = {
           ['seconds_long', 'secondsLong']
         ],
         order: [['order', 'ASC']],
-        separate: true
-      }
-    })
+        separate: true,
+      },
+    });
 
-    return courseWithEpisodes
+    return courseWithEpisodes;
+  },
+
+  getRandomFeaturedCourses: async () => {
+    const featuredCourses = await Course.findAll({
+      attributes: ['id', 'name', 'synopsis', ['thumbnail_url', 'thumbnailUrl']],
+      where: {
+        featured: true,
+      },
+    });
+
+    const randomFeaturedCourses = featuredCourses.sort(() => 0.5 - Math.random());
+
+    return randomFeaturedCourses.slice(0, 3);
   },
 }
