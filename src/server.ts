@@ -1,12 +1,15 @@
 import express from 'express'; //importamos o express
 import { sequelize } from './database';
 import { adminJs, adminJsRouter } from './adminjs';
+import { router } from './routes';
 
 const app = express(); //instanciamos o express
 
 app.use(express.static('public')); //Informamos ao express onde ficar a rota dos arquivos estáticos.
 
 app.use(adminJs.options.rootPath, adminJsRouter); //Mesma coisa que faziamos com o express, app.use(caminho, rotas)
+
+app.use(router);
 
 const PORT = process.env.PORT || 3000; //definimos a porta pelo env.Port ou caso não tenha será 3000
 
