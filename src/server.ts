@@ -7,6 +7,8 @@ const app = express(); //instanciamos o express
 
 app.use(express.static('public')); //Informamos ao express onde ficar a rota dos arquivos estáticos.
 
+app.use(express.json());
+
 app.use(adminJs.options.rootPath, adminJsRouter); //Mesma coisa que faziamos com o express, app.use(caminho, rotas)
 
 app.use(router);
