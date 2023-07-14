@@ -2,8 +2,11 @@ import express from 'express'; //importamos o express
 import { sequelize } from './database';
 import { adminJs, adminJsRouter } from './adminjs';
 import { router } from './routes';
+import cors from 'cors';
 
 const app = express(); //instanciamos o express
+
+app.use(cors()); //permitir as requisições a partir de outras origens
 
 app.use(express.static('public')); //Informamos ao express onde ficar a rota dos arquivos estáticos.
 
